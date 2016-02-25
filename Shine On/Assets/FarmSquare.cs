@@ -3,79 +3,58 @@ using System.Collections;
 
 public class FarmSquare : MonoBehaviour {
 
+    public GameObject GroundTilePrefab;
+    public GameObject PlantPrefab;
+
     public Material dryMat;
     public Material wetMat;
 
-    private GameObject groundTile;
+    public Material healthyMat;
+    public Material withermat;
 
-    public float hydration = 0;
-    public bool hydrated
-    {
-        get
-        {
-            return hydration > 0;
-        }
-    }
-    public bool planted = false;
-    public Crop plantedCrop;
+    private GameObject groundTile;
+    private GameObject plant;
+
+    public FarmTileData data;
     
 
 	// Use this for initialization
 	void Start () {
-	    //groundTile = gameObject.ch
-	}
+        groundTile = (GameObject)Instantiate(GroundTilePrefab, new Vector3(this.transform.position.x + 0.5f, 0, this.transform.position.z + 0.5f), GroundTilePrefab.transform.rotation);
+        groundTile.transform.parent = this.transform;
+        plant = (GameObject)Instantiate(PlantPrefab, new Vector3(this.transform.position.x + 0.5f, 0, this.transform.position.z + 0.5f), PlantPrefab.transform.rotation);
+        plant.transform.parent = this.transform;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         // Hydration
-        if (hydration > 0)
+        if (data.hydration > 0)
         {
-            gameObject.GetComponentInChildren<MeshRenderer>().material = wetMat;
-            hydration -= Random.Range(1.0f, 2.0f) * Time.deltaTime;
-            if (hydration < 0)
-            {
-                hydration = 0;
-            }
+            groundTile.GetComponentInChildren<MeshRenderer>().material = wetMat;
         }
         else
         {
-            gameObject.GetComponentInChildren<MeshRenderer>().material = dryMat;
+            groundTile.GetComponentInChildren<MeshRenderer>().material = dryMat;
         }
-        // Crop Handling
-        if (planted)
+
+        if (data.crop.health < 50)
         {
-            if (hydrated)
-            {
-                plantedCrop.growth += (1 * Time.deltaTime) / 60;
-            }
-            else
-            {
-                plantedCrop.life -= (1 * Time.deltaTime) / 60;
-            }
+            plant.GetComponentInChildren<MeshRenderer>().material = withermat;
+        }
+        else
+        {
+            plant.GetComponentInChildren<MeshRenderer>().material = healthyMat;
+        }
+        plant.GetComponent<MeshRenderer>().enabled = data.planted;
+        // Crop Handling
+        if (data.planted)
+        {
+            int stageIndexer = Mathf.Clamp(data.crop.stage - 1, 0, data.crop.identity.stages - 1);
+            plant.GetComponent<MeshFilter>().mesh = data.crop.identity.stagesMeshs[stageIndexer];
         }
 	}
 
-    public void Interact(PlayerControl.Tool _usedTool)
-    {
-        switch (_usedTool) {
-            case PlayerControl.Tool.WaterCan:
-                hydration += 60;
-                break;
-            default:
-                break;
-        }
-    }
+    
 }
 
-[System.Serializable]
-public class Crop
-{
-    public float life = 100;
-    public float growth = 0;
-}
-
-[System.Serializable]
-public class Plant
-{
-    public float life = 100;
-}

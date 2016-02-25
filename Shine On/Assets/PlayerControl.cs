@@ -5,9 +5,45 @@ public class PlayerControl : Entity {
 
     public enum Heading { North = 0, East, South, West };
     public Heading facing;
-    public enum Tool { WaterCan, Hoe };
+    public enum Tool { Hands = 0, WaterCan, Hoe, Seed };
     public Tool equipedTool = Tool.WaterCan;
     public float walkSpeed = 0.1f;
+
+    public float tempMoney = 0;
+
+    public TilePosition targetTile
+    {
+        get
+        {
+            TilePosition ret = new TilePosition();
+            float reach = 0.8f;
+            if (facing == Heading.East)
+            {
+                ret.x = (int)(transform.position.x + reach);
+            }
+            else if (facing == Heading.West)
+            {
+                ret.x = (int)(transform.position.x - reach);
+            }
+            else
+            {
+                ret.x = (int)transform.position.x;
+            }
+            if (facing == Heading.North)
+            {
+                ret.y = (int)(transform.position.z + reach);
+            }
+            else if (facing == Heading.South)
+            {
+                ret.y = (int)(transform.position.z - reach);
+            }
+            else
+            {
+                ret.y = (int)transform.position.z;
+            }
+            return ret;
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +84,15 @@ public class PlayerControl : Entity {
         } else
         {
             transform.position += rawMovement;
+        }
+        // Equipment
+        if (Input.GetButtonDown("Fire2"))
+        {
+            equipedTool++;
+            if (equipedTool > Tool.Seed)
+            {
+                equipedTool = Tool.Hands;
+            }
         }
 	}
 }
