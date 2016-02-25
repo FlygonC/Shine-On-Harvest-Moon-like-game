@@ -28,10 +28,10 @@ public class FarmTileData {
         switch (_usedTool)
         {
             case PlayerControl.Tool.Hands:
-                if (crop.stage == crop.identity.stages)
+                if (crop.fullGrown)
                 {
-                    Die(false);
                     GameObject.FindObjectOfType<PlayerControl>().tempMoney += crop.health;
+                    Die(false);
                 }
                 break;
             case PlayerControl.Tool.WaterCan:
@@ -49,7 +49,7 @@ public class FarmTileData {
             case PlayerControl.Tool.Seed:
                 if (!planted)
                 {
-                    planted = true;
+                    PlantSeed();
                 }
                 break;
             default:
@@ -57,9 +57,11 @@ public class FarmTileData {
         }
     }
 
-    public void PlantSeed(Plant _seed)
+    public void PlantSeed(/*Plant _seed*/)
     {
         planted = true;
+        crop.health = 100;
+        crop.stage = 1;
     }
     
     public void NextDay()
@@ -68,19 +70,28 @@ public class FarmTileData {
         {
             if (hydrated)
             {
-                if (crop.stage < crop.identity.stages)
+                // If not Fully Grown
+                if (!crop.fullGrown)
                 {
+                    // Grow
                     crop.growth += 1;
+                    // Next Stage growth
                     if (crop.growth >= crop.identity.growTime)
                     {
                         crop.growth = 0;
                         crop.stage += 1;
                     }
                 }
+                if (crop.health < 100)
+                {
+                    crop.health = Mathf.Min(crop.health + 10, 100);
+                }
             }
             else
             {
+                // If not Watered, Lose health
                 crop.health -= crop.identity.fragility;
+                // Die if 0 health...
                 if (crop.health <= 0)
                 {
                     Die(false);
@@ -93,6 +104,9 @@ public class FarmTileData {
     public void Die(bool _leaveWeed)
     {
         planted = false;
+        crop.health = 0;
+        crop.growth = 0;
+        crop.stage = 0;
     }
 }
 
@@ -103,6 +117,14 @@ public class Crop
     public float health = 100;
     public float growth = 0;
     public int stage = 1;
+
+    public bool fullGrown
+    {
+        get
+        {
+            return stage >= identity.stages;
+        }
+    }
 }
 
 [System.Serializable][CreateAssetMenu(fileName = "New Plant", menuName = "Plant", order = 1)]

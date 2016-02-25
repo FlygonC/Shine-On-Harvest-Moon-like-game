@@ -10,6 +10,7 @@ public class FarmSquare : MonoBehaviour {
     public Material wetMat;
 
     public Material healthyMat;
+    public Material notDyingMat;
     public Material withermat;
 
     private GameObject groundTile;
@@ -38,14 +39,21 @@ public class FarmSquare : MonoBehaviour {
             groundTile.GetComponentInChildren<MeshRenderer>().material = dryMat;
         }
 
+        
         if (data.crop.health < 50)
         {
             plant.GetComponentInChildren<MeshRenderer>().material = withermat;
         }
-        else
+        else if (data.crop.health < 90)
+        {
+            plant.GetComponentInChildren<MeshRenderer>().material = notDyingMat;
+        }
+        else if (data.crop.health >= 90)
         {
             plant.GetComponentInChildren<MeshRenderer>().material = healthyMat;
         }
+
+
         plant.GetComponent<MeshRenderer>().enabled = data.planted;
         // Crop Handling
         if (data.planted)
