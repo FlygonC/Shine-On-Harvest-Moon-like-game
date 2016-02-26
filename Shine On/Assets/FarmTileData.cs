@@ -150,5 +150,5 @@ public class Plant : ScriptableObject
     public Mesh[] stagesMeshs;// Visual Meshes for stages
     public bool dieOnHarvest;// If dies When Harvested
     public int harvestRevertStage;// Stage to revert to on harvest
-    public Item yield;// Item you get from Harvesting
+    public ItemObject yield;// Item you get from Harvesting
 }

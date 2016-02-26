@@ -11,6 +11,6 @@ public class TargetInd : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = new Vector3(player.targetTile.x, 0.1f, player.targetTile.y);
+        transform.position = new Vector3(player.targetTile.x, 0.02f, player.targetTile.y);
 	}
 }

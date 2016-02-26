@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class InventoryItem
 {
-    public Item item;
+    public ItemObject item;
     
     public int maxStack
     {
@@ -18,6 +18,8 @@ public class InventoryItem
         }
     }
     public int count;
+
+    //public float quality;
 
     public InventoryItem()
     {
@@ -113,13 +115,14 @@ public class Inventory : MonoBehaviour {
             if (slots[i].GetComponent<SlotScript>().rightClicked == true)
             {
                 slots[i].GetComponent<SlotScript>().rightClicked = false;
-                if (items[i].item != null && items[i].item.useable == true)
+                if (items[i].item != null /*&& items[i].item.useable == true*/)
                 {
-                    items[i].item.UseItem(GameObject.FindGameObjectWithTag("Player"));
+                    /*items[i].item.UseItem(GameObject.FindGameObjectWithTag("Player"));
                     if (items[i].item.consumable)
                     {
                         items[i].count--;
-                    }
+                    }*/
+                    TakeOutItem(i);
                 }
             }
             //when a slot is hovered over
@@ -169,7 +172,7 @@ public class Inventory : MonoBehaviour {
         }
     }*/
 
-    public void PickUpItem(Item _item)
+    public void PickUpItem(ItemObject _item)
     {
         if (handHeldItem.count == 0)
         {
@@ -194,22 +197,33 @@ public class Inventory : MonoBehaviour {
         }
         return false;
     }
+    public void TakeOutItem(int _fromSlot)
+    {
+        if (handHeldItem.count == 0)
+        {
+            handHeldItem.item = items[_fromSlot].item;
+            handHeldItem.count = items[_fromSlot].count;
 
-    public bool AddItemToEmptySlot(Item _item)
+            items[_fromSlot].item = null;
+            items[_fromSlot].count = 0;
+        }
+    }
+
+    public bool AddItemToEmptySlot(ItemObject _item, int _count = 1)
     {
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i].item == null)
             {
                 items[i].item = _item;
-                items[i].count = 1;
+                items[i].count = _count;
                 return true;
             }
         }
         return false;
     }
 
-    public bool AddItemToStack(Item _item)
+    public bool AddItemToStack(ItemObject _item)
     {
         for (int i = 0; i < items.Count; i++)
         {

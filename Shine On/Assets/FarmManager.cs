@@ -38,9 +38,9 @@ public class FarmManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         timer += Time.deltaTime;
-        if (timer >= 0.5f)
+        if (timer >= 1)
         {
-            timer -= 0.5f;
+            timer -= 1;
             tempClock += 1;
             if (tempClock >= 25)
             {

@@ -3,14 +3,18 @@ using System.Collections;
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "New Item", menuName = "Item", order = 1)]
-public class Item : ScriptableObject
+public class ItemObject : ScriptableObject
 {
+    public enum ItemTool { NotTool = 0, Watercan, Hoe, Seeds };
+
     public Sprite icon;
 
+    public string itemName;
     public bool useable;
     public bool consumable;
-    [Range(1,20)]
     public int stackSize;
+
+    public ItemTool tool;
 
     public void UseItem(GameObject _target)
     {
@@ -18,6 +22,6 @@ public class Item : ScriptableObject
     }
     public string WriteTooltip()
     {
-        return "Tool Tip";
+        return itemName;
     }
 }

@@ -13,6 +13,8 @@ public class PlayerControl : Entity {
 
     public float tempMoney = 0;
 
+    public ItemObject[] startTools;
+
     public TilePosition targetTile
     {
         get
@@ -49,7 +51,10 @@ public class PlayerControl : Entity {
 
 	// Use this for initialization
 	void Start () {
-	    
+	    foreach (ItemObject i in startTools)
+        {
+            InvRef.AddItemToEmptySlot(i);
+        }
 	}
 	
 	// Update is called once per frame
@@ -58,10 +63,12 @@ public class PlayerControl : Entity {
         {
             GetComponentInChildren<SpriteRenderer>().sprite = InvRef.handHeldItem.item.icon;
             GetComponentInChildren<SpriteRenderer>().enabled = true;
+            equipedTool = Tool.Holding + (int)InvRef.handHeldItem.item.tool;
         }
         else
         {
             GetComponentInChildren<SpriteRenderer>().enabled = false;
+            equipedTool = Tool.Hands;
         }
 
         transform.rotation = Quaternion.Euler(0.0f, (float)facing * 90.0f, 0.0f);
@@ -98,14 +105,14 @@ public class PlayerControl : Entity {
             transform.position += rawMovement;
         }
         // Equipment
-        if (Input.GetButtonDown("Fire2"))
+        /*if (Input.GetButtonDown("Fire2"))
         {
             equipedTool++;
             if (equipedTool > Tool.Seed)
             {
                 equipedTool = Tool.Hands;
             }
-        }
+        }*/
         // Store Item
         if (Input.GetButtonDown("Fire3"))
         {
