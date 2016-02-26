@@ -30,8 +30,7 @@ public class FarmTileData {
             case PlayerControl.Tool.Hands:
                 if (crop.fullGrown)
                 {
-                    GameObject.FindObjectOfType<PlayerControl>().tempMoney += crop.health;
-                    Die(false);
+                    Harvest();
                 }
                 break;
             case PlayerControl.Tool.WaterCan:
@@ -100,6 +99,21 @@ public class FarmTileData {
         }
         hydration = 0;
     }
+
+    public void Harvest()
+    {
+        GameObject.FindObjectOfType<PlayerControl>().tempMoney += crop.health;
+        GameObject.FindObjectOfType<Inventory>().PickUpItem(crop.identity.yield);
+        if (crop.identity.dieOnHarvest)
+        {
+            Die(false);
+        }
+        else
+        {
+            crop.growth = 0;
+            crop.stage = crop.identity.harvestRevertStage;
+        }
+    }
     
     public void Die(bool _leaveWeed)
     {
@@ -130,8 +144,11 @@ public class Crop
 [System.Serializable][CreateAssetMenu(fileName = "New Plant", menuName = "Plant", order = 1)]
 public class Plant : ScriptableObject
 {
-    public int growTime;// Days per stage
-    public int stages;
-    public float fragility;
-    public Mesh[] stagesMeshs;
+    public int growTime;// Days per stage of growth
+    public int stages;// Number of Stages of growth
+    public float fragility;// Health lost in harmfull conditions
+    public Mesh[] stagesMeshs;// Visual Meshes for stages
+    public bool dieOnHarvest;// If dies When Harvested
+    public int harvestRevertStage;// Stage to revert to on harvest
+    public Item yield;// Item you get from Harvesting
 }

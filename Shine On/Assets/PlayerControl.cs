@@ -3,9 +3,11 @@ using System.Collections;
 
 public class PlayerControl : Entity {
 
+    public Inventory InvRef;
+
     public enum Heading { North = 0, East, South, West };
     public Heading facing;
-    public enum Tool { Hands = 0, WaterCan, Hoe, Seed };
+    public enum Tool { Hands = 0, Holding, WaterCan, Hoe, Seed };
     public Tool equipedTool = Tool.WaterCan;
     public float walkSpeed = 0.1f;
 
@@ -52,6 +54,16 @@ public class PlayerControl : Entity {
 	
 	// Update is called once per frame
 	void Update () {
+        if (InvRef.handHeldItem.count > 0)
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = InvRef.handHeldItem.item.icon;
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+        }
+        else
+        {
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+        }
+
         transform.rotation = Quaternion.Euler(0.0f, (float)facing * 90.0f, 0.0f);
         // Face Direction of Axis
         if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.5f)
@@ -93,6 +105,11 @@ public class PlayerControl : Entity {
             {
                 equipedTool = Tool.Hands;
             }
+        }
+        // Store Item
+        if (Input.GetButtonDown("Fire3"))
+        {
+            InvRef.StoreHeldItem();
         }
 	}
 }
