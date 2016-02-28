@@ -2,14 +2,14 @@
 using System.Collections;
 
 public class PlayerControl : Entity {
-
+    [Header("Player:")]
     public Inventory InvRef;
 
-    public enum Heading { North = 0, East, South, West };
-    public Heading facing;
+    //public enum Heading { North = 0, East, South, West };
+    // Heading facing;
     public enum Tool { Hands = 0, Holding, WaterCan, Hoe, Seed };
     public Tool equipedTool = Tool.WaterCan;
-    public float walkSpeed = 0.1f;
+    //public float walkSpeed = 0.1f;
 
     public float tempMoney = 0;
 
@@ -61,9 +61,9 @@ public class PlayerControl : Entity {
 	void Update () {
         if (InvRef.handHeldItem.count > 0)
         {
-            GetComponentInChildren<SpriteRenderer>().sprite = InvRef.handHeldItem.item.icon;
+            GetComponentInChildren<SpriteRenderer>().sprite = InvRef.handHeldItem.identity.icon;
             GetComponentInChildren<SpriteRenderer>().enabled = true;
-            equipedTool = Tool.Holding + (int)InvRef.handHeldItem.item.tool;
+            equipedTool = Tool.Holding + (int)InvRef.handHeldItem.identity.tool;
         }
         else
         {
@@ -96,13 +96,13 @@ public class PlayerControl : Entity {
             }
         }
         // Move
-        Vector3 rawMovement = new Vector3(Input.GetAxis("Horizontal") * walkSpeed, 0, Input.GetAxis("Vertical") * walkSpeed);
-        if (rawMovement.magnitude > 1)
+        Vector3 rawInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        if (rawInput.magnitude > 1)
         {
-            transform.position += rawMovement.normalized;
+            transform.position += rawInput.normalized * walkSpeed * Time.deltaTime;
         } else
         {
-            transform.position += rawMovement;
+            transform.position += rawInput * walkSpeed * Time.deltaTime;
         }
         // Equipment
         /*if (Input.GetButtonDown("Fire2"))

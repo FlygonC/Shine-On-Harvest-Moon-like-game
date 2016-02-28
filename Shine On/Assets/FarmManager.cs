@@ -26,8 +26,8 @@ public class FarmManager : MonoBehaviour {
             for (int x = 0; x < farmColumns; x++)
             {
                 farm[x, y] = new FarmTileData();
-                farm[x, y].tile.x = x;
-                farm[x, y].tile.y = y;
+                farm[x, y].tilePos.x = x;
+                farm[x, y].tilePos.y = y;
                 farm[x, y].crop.identity = defaultPlant;
             }
         }
@@ -52,10 +52,18 @@ public class FarmManager : MonoBehaviour {
 
         if (Input.GetButtonDown("Fire1"))
         {
-            if (player.targetTile.x >= 0 && player.targetTile.x <= farmColumns - 1 && player.targetTile.y >= 0 && player.targetTile.y <= farmRows - 1)
+            foreach (FarmTileData i in farm)
             {
-                farm[player.targetTile.x, player.targetTile.y].Interact(player.equipedTool);
+                if (player.targetTile.Equals(i.tilePos))
+                {
+                    //Debug.Log("thing");
+                    i.Interact(player.equipedTool);
+                }
             }
+            /*if (player.targetTile.x >= 0 && player.targetTile.x <= farmColumns - 1 && player.targetTile.y >= 0 && player.targetTile.y <= farmRows - 1)
+            {
+                //farm[player.targetTile.x, player.targetTile.y].Interact(player.equipedTool);
+            }*/
         }
 	}
 
@@ -79,9 +87,9 @@ public class FarmManager : MonoBehaviour {
         {
             for (int x = 0; x < farmColumns; x++)
             {
-                tiles[x, y] = (FarmSquare)Instantiate(squarePrefab, new Vector3(x, 0, y), Quaternion.identity);
+                tiles[x, y] = (FarmSquare)Instantiate(squarePrefab/*, new Vector3(x, 0, y), Quaternion.identity*/);
                 tiles[x, y].data = farm[x, y];
-                tiles[x, y].name = "Tile " + x + ", " + y;
+                tiles[x, y].name = "Farm Tile " + x + ", " + y;
             }
         }
     }

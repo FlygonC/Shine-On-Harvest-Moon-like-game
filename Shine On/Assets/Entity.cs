@@ -2,9 +2,15 @@
 using System.Collections;
 
 public class Entity : MonoBehaviour {
+    
+    public enum Heading { North = 0, East, South, West };
+    [Header("Entity:")]
+    public Heading facing;
 
-	// Use this for initialization
-	void Start () {
+    public float walkSpeed = 0.1f;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	

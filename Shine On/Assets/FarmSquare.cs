@@ -29,6 +29,7 @@ public class FarmSquare : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        transform.position = new Vector3(data.tilePos.x, 0, data.tilePos.y);
         // Hydration
         if (data.hydration > 0)
         {

@@ -1,17 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public struct TilePosition
-{
-    public int x;
-    public int y;
-}
 
 [System.Serializable]
-public class FarmTileData {
-    
-    public TilePosition tile;
-
+public class FarmTileData : TileData {
+    [Header("Farm Tile:")]
     public float hydration = 0;
     public bool hydrated
     {
@@ -102,7 +95,7 @@ public class FarmTileData {
 
     public void Harvest()
     {
-        GameObject.FindObjectOfType<PlayerControl>().tempMoney += crop.health;
+        //GameObject.FindObjectOfType<PlayerControl>().tempMoney += crop.health;
         GameObject.FindObjectOfType<Inventory>().PickUpItem(crop.identity.yield);
         if (crop.identity.dieOnHarvest)
         {

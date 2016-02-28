@@ -8,13 +8,13 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class InventoryItem
 {
-    public ItemObject item;
+    public ItemObject identity;
     
     public int maxStack
     {
         get
         {
-            return item.stackSize;
+            return identity.stackSize;
         }
     }
     public int count;
@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour {
         {
             if (i.count <= 0)
             {
-                i.item = null;
+                i.identity = null;
                 i.count = 0;
             }
         }
@@ -92,7 +92,7 @@ public class Inventory : MonoBehaviour {
         tooltipText.enabled = false;
         for (int i = 0; i < numberOfSlots; i++)
         {
-            if (items[i].item == null)
+            if (items[i].identity == null)
             {
                 slots[i].GetComponent<SlotScript>().itemImage.enabled = false;
                 slots[i].GetComponent<SlotScript>().itemCount.enabled = false;
@@ -100,7 +100,7 @@ public class Inventory : MonoBehaviour {
             else
             {
                 slots[i].GetComponent<SlotScript>().itemImage.enabled = true;
-                slots[i].GetComponent<SlotScript>().itemImage.sprite = items[i].item.icon;
+                slots[i].GetComponent<SlotScript>().itemImage.sprite = items[i].identity.icon;
                 if (items[i].count > 1)
                 {
                     slots[i].GetComponent<SlotScript>().itemCount.enabled = true;
@@ -115,7 +115,7 @@ public class Inventory : MonoBehaviour {
             if (slots[i].GetComponent<SlotScript>().rightClicked == true)
             {
                 slots[i].GetComponent<SlotScript>().rightClicked = false;
-                if (items[i].item != null /*&& items[i].item.useable == true*/)
+                if (items[i].identity != null /*&& items[i].item.useable == true*/)
                 {
                     /*items[i].item.UseItem(GameObject.FindGameObjectWithTag("Player"));
                     if (items[i].item.consumable)
@@ -129,12 +129,12 @@ public class Inventory : MonoBehaviour {
             
             if (slots[i].GetComponent<SlotScript>().hover)
             {
-                if (items[i].item != null)
+                if (items[i].identity != null)
                 {
                     tooltipText.enabled = true;
                     tooltipText.gameObject.transform.position = Input.mousePosition;
                     tooltipText.gameObject.transform.position += new Vector3(0, -20, 0);
-                    tooltipText.text = items[i].item.WriteTooltip();
+                    tooltipText.text = items[i].identity.WriteTooltip();
                 }
             }
         }
@@ -176,7 +176,7 @@ public class Inventory : MonoBehaviour {
     {
         if (handHeldItem.count == 0)
         {
-            handHeldItem.item = _item;
+            handHeldItem.identity = _item;
             handHeldItem.count = 1;
         }
     }
@@ -184,12 +184,12 @@ public class Inventory : MonoBehaviour {
     {
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].item == null)
+            if (items[i].identity == null)
             {
-                items[i].item = handHeldItem.item;
+                items[i].identity = handHeldItem.identity;
                 items[i].count = handHeldItem.count;
 
-                handHeldItem.item = null;
+                handHeldItem.identity = null;
                 handHeldItem.count = 0;
 
                 return true;
@@ -201,10 +201,10 @@ public class Inventory : MonoBehaviour {
     {
         if (handHeldItem.count == 0)
         {
-            handHeldItem.item = items[_fromSlot].item;
+            handHeldItem.identity = items[_fromSlot].identity;
             handHeldItem.count = items[_fromSlot].count;
 
-            items[_fromSlot].item = null;
+            items[_fromSlot].identity = null;
             items[_fromSlot].count = 0;
         }
     }
@@ -213,9 +213,9 @@ public class Inventory : MonoBehaviour {
     {
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].item == null)
+            if (items[i].identity == null)
             {
-                items[i].item = _item;
+                items[i].identity = _item;
                 items[i].count = _count;
                 return true;
             }
@@ -227,7 +227,7 @@ public class Inventory : MonoBehaviour {
     {
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].item == _item)
+            if (items[i].identity == _item)
             {
                 if (items[i].count < items[i].maxStack)
                 {
