@@ -44,13 +44,13 @@ public class FarmManager : MonoBehaviour {
             tempClock += 1;
             if (tempClock >= 25)
             {
-                tempClock -= 24;
-                day++;
+                //tempClock -= 24;
+                //day++;
                 NextDay();
             }
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        /*if (PlayerControl.ThePlayer.interact)
         {
             foreach (FarmTileData i in farm)
             {
@@ -60,16 +60,14 @@ public class FarmManager : MonoBehaviour {
                     i.Interact(player.equipedTool);
                 }
             }
-            /*if (player.targetTile.x >= 0 && player.targetTile.x <= farmColumns - 1 && player.targetTile.y >= 0 && player.targetTile.y <= farmRows - 1)
-            {
-                //farm[player.targetTile.x, player.targetTile.y].Interact(player.equipedTool);
-            }*/
-        }
+        }*/
 	}
 
     [ContextMenu("Next Day")]
     public void NextDay()
     {
+        tempClock = 1;
+        day++;
         for (int y = 0; y < farmRows; y++)
         {
             for (int x = 0; x < farmColumns; x++)

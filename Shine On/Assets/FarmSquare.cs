@@ -26,9 +26,10 @@ public class FarmSquare : MonoBehaviour {
         plant = (GameObject)Instantiate(PlantPrefab, new Vector3(this.transform.position.x + 0.5f, 0, this.transform.position.z + 0.5f), PlantPrefab.transform.rotation);
         plant.transform.parent = this.transform;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         transform.position = new Vector3(data.tilePos.x, 0, data.tilePos.y);
         // Hydration
         if (data.hydration > 0)
@@ -40,7 +41,7 @@ public class FarmSquare : MonoBehaviour {
             groundTile.GetComponentInChildren<MeshRenderer>().material = dryMat;
         }
 
-        
+
         if (data.crop.health < 50)
         {
             plant.GetComponentInChildren<MeshRenderer>().material = withermat;
@@ -62,8 +63,12 @@ public class FarmSquare : MonoBehaviour {
             int stageIndexer = Mathf.Clamp(data.crop.stage - 1, 0, data.crop.identity.stages - 1);
             plant.GetComponent<MeshFilter>().mesh = data.crop.identity.stagesMeshs[stageIndexer];
         }
-	}
 
-    
+        // Player interaction
+        if (PlayerControl.ThePlayer.interact && PlayerControl.ThePlayer.targetTile.Equals(data.tilePos))
+        {
+            data.Interact(PlayerControl.ThePlayer.equipedTool);
+        }
+    }
 }
 

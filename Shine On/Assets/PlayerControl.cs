@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class PlayerControl : Entity {
+
+    public static PlayerControl ThePlayer;
+
     [Header("Player:")]
     public Inventory InvRef;
 
@@ -9,6 +12,8 @@ public class PlayerControl : Entity {
     // Heading facing;
     public enum Tool { Hands = 0, Holding, WaterCan, Hoe, Seed };
     public Tool equipedTool = Tool.WaterCan;
+    public bool interact = false;
+    
     //public float walkSpeed = 0.1f;
 
     public float tempMoney = 0;
@@ -51,6 +56,17 @@ public class PlayerControl : Entity {
 
 	// Use this for initialization
 	void Start () {
+        if (ThePlayer == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            ThePlayer = this;
+        }
+        else if (ThePlayer != this)
+        {
+            Destroy(gameObject);
+        }
+
+
 	    foreach (ItemObject i in startTools)
         {
             InvRef.AddItemToEmptySlot(i);
@@ -104,14 +120,16 @@ public class PlayerControl : Entity {
         {
             transform.position += rawInput * walkSpeed * Time.deltaTime;
         }
+        // Interaction
+        interact = false;
+        if (Input.GetButtonDown("Fire1"))
+        {
+            interact = true;
+        }
         // Equipment
         /*if (Input.GetButtonDown("Fire2"))
         {
-            equipedTool++;
-            if (equipedTool > Tool.Seed)
-            {
-                equipedTool = Tool.Hands;
-            }
+            InvRef.StoreHeldItem();
         }*/
         // Store Item
         if (Input.GetButtonDown("Fire3"))

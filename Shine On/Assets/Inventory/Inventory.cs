@@ -19,7 +19,7 @@ public class InventoryItem
     }
     public int count;
 
-    //public float quality;
+    public float data;
 
     public InventoryItem()
     {
@@ -82,8 +82,9 @@ public class Inventory : MonoBehaviour {
         {
             if (i.count <= 0)
             {
-                i.identity = null;
-                i.count = 0;
+                //i.identity = null;
+                //i.count = 0;
+                ClearItem(i);
             }
         }
         //Update the slots
@@ -172,12 +173,13 @@ public class Inventory : MonoBehaviour {
         }
     }*/
 
-    public void PickUpItem(ItemObject _item)
+    public void PickUpItem(ItemObject _item, int _count = 1, float _quality = 0)
     {
         if (handHeldItem.count == 0)
         {
             handHeldItem.identity = _item;
-            handHeldItem.count = 1;
+            handHeldItem.count = _count;
+            handHeldItem.data = _quality;
         }
     }
     public bool StoreHeldItem()
@@ -188,9 +190,9 @@ public class Inventory : MonoBehaviour {
             {
                 items[i].identity = handHeldItem.identity;
                 items[i].count = handHeldItem.count;
+                items[i].data = handHeldItem.data;
 
-                handHeldItem.identity = null;
-                handHeldItem.count = 0;
+                ClearItem(handHeldItem);
 
                 return true;
             }
@@ -203,13 +205,13 @@ public class Inventory : MonoBehaviour {
         {
             handHeldItem.identity = items[_fromSlot].identity;
             handHeldItem.count = items[_fromSlot].count;
+            handHeldItem.data = items[_fromSlot].data;
 
-            items[_fromSlot].identity = null;
-            items[_fromSlot].count = 0;
+            ClearItem(items[_fromSlot]);
         }
     }
 
-    public bool AddItemToEmptySlot(ItemObject _item, int _count = 1)
+    public bool AddItemToEmptySlot(ItemObject _item, int _count = 1, float _quality = 0)
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -217,13 +219,14 @@ public class Inventory : MonoBehaviour {
             {
                 items[i].identity = _item;
                 items[i].count = _count;
+                items[i].data = _quality;
                 return true;
             }
         }
         return false;
     }
 
-    public bool AddItemToStack(ItemObject _item)
+    public bool AddItemToStack(ItemObject _item, int _count = 1, float _quality = 0)
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -237,5 +240,15 @@ public class Inventory : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    void ClearItem(InventoryItem _target)
+    {
+        _target.identity = null;
+        _target.count = 0;
+    }
+    InventoryItem CopyItem(InventoryItem _target)
+    {
+        return _target;
     }
 }

@@ -41,7 +41,11 @@ public class FarmTileData : TileData {
             case PlayerControl.Tool.Seed:
                 if (!planted)
                 {
-                    PlantSeed();
+                    if (PlayerControl.ThePlayer.InvRef.handHeldItem.count > 0)
+                    {
+                        PlantSeed(GameObject.FindObjectOfType<SeedIndex>().GetSeed((int)PlayerControl.ThePlayer.InvRef.handHeldItem.data));
+                        PlayerControl.ThePlayer.InvRef.handHeldItem.count--;
+                    }
                 }
                 break;
             default:
@@ -49,8 +53,9 @@ public class FarmTileData : TileData {
         }
     }
 
-    public void PlantSeed(/*Plant _seed*/)
+    public void PlantSeed(Plant _seed)
     {
+        crop.identity = _seed;
         planted = true;
         crop.health = 100;
         crop.stage = 1;
@@ -96,7 +101,7 @@ public class FarmTileData : TileData {
     public void Harvest()
     {
         //GameObject.FindObjectOfType<PlayerControl>().tempMoney += crop.health;
-        GameObject.FindObjectOfType<Inventory>().PickUpItem(crop.identity.yield);
+        GameObject.FindObjectOfType<Inventory>().PickUpItem(crop.identity.yield, (int)crop.health, crop.health);
         if (crop.identity.dieOnHarvest)
         {
             Die(false);
