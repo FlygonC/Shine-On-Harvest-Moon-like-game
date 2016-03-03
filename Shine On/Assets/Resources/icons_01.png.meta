@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: 96286cb05c0ef7045af953087f91a1c3
+timeCreated: 1456965308
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: icons_01_0
+    21300002: icons_01_1
+    21300004: icons_01_2
+    21300006: icons_01_3
+    21300008: icons_01_4
+    21300010: icons_01_5
+    21300012: icons_01_6
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1000
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: icons_01_0
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 1815
+        width: 209
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11.5, y: 11}
+        - {x: 37.5, y: 94}
+        - {x: -36.5, y: 94}
+        - {x: -64.5, y: 89}
+        - {x: -81.5, y: 64}
+        - {x: -104.5, y: 48}
+        - {x: -104.5, y: -94}
+        - {x: 104.5, y: -94}
+        - {x: 104.5, y: -74}
+        - {x: 22.5, y: 1}
+    - name: icons_01_1
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 1831
+        width: 228
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 14, y: 88}
+        - {x: -53, y: 54}
+        - {x: -81, y: 16}
+        - {x: -114, y: -6}
+        - {x: -114, y: -51}
+        - {x: -106, y: -70}
+        - {x: -7, y: -88}
+        - {x: 81, y: -88}
+        - {x: 114, y: -76}
+        - {x: 114, y: 86}
+        - {x: 112, y: 88}
+    - name: icons_01_2
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 1570
+        width: 219
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 109.5, y: 44.5}
+        - {x: 90.5, y: 94.5}
+        - {x: 87.5, y: 95.5}
+        - {x: -40.5, y: 95.5}
+        - {x: -109.5, y: 43.5}
+        - {x: -109.5, y: -95.5}
+        - {x: -70.5, y: -95.5}
+        - {x: -48.5, y: -83.5}
+        - {x: 89.5, y: -92.5}
+        - {x: 109.5, y: -50.5}
+    - name: icons_01_3
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 1577
+        width: 193
+        height: 173
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 79.5, y: 55.5}
+        - {x: -2.5, y: 86.5}
+        - {x: -78.5, y: 86.5}
+        - {x: -96.5, y: 75.5}
+        - {x: -96.5, y: -36.5}
+        - {x: -94.5, y: -48.5}
+        - {x: -30.5, y: -84.5}
+        - {x: -9.5, y: -86.5}
+        - {x: 59.5, y: -86.5}
+        - {x: 78.5, y: -76.5}
+        - {x: 96.5, y: -54.5}
+        - {x: 96.5, y: 14.5}
+    - name: icons_01_4
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 1564
+        width: 152
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 33, y: 99.5}
+        - {x: -33, y: 99.5}
+        - {x: -76, y: 75.5}
+        - {x: -76, y: -52.5}
+        - {x: -47, y: -94.5}
+        - {x: -29, y: -99.5}
+        - {x: 46, y: -99.5}
+        - {x: 76, y: -77.5}
+        - {x: 76, y: 9.5}
+        - {x: 51, y: 81.5}
+    - name: icons_01_5
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 1300
+        width: 192
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 93, y: -7}
+        - {x: 84, y: 105}
+        - {x: 81, y: 106}
+        - {x: 72, y: 108}
+        - {x: 5, y: 108}
+        - {x: -64, y: 104}
+        - {x: -96, y: 88}
+        - {x: -96, y: 67}
+        - {x: -70, y: -70}
+        - {x: -65, y: -108}
+        - {x: -35, y: -108}
+        - {x: -21, y: -104}
+        - {x: 82, y: -100}
+        - {x: 96, y: -80}
+        - {x: 96, y: -33}
+    - name: icons_01_6
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 1300
+        width: 192
+        height: 216
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 90, y: 104}
+        - {x: 89, y: 107}
+        - {x: 80, y: 108}
+        - {x: 28, y: 108}
+        - {x: 25, y: 107}
+        - {x: -67, y: 107}
+        - {x: -96, y: 88}
+        - {x: -96, y: 68}
+        - {x: -70, y: -52}
+        - {x: -70, y: -97}
+        - {x: -63, y: -108}
+        - {x: -22, y: -108}
+        - {x: 89, y: -99}
+        - {x: 96, y: -83}
+        - {x: 96, y: -33}
+        - {x: 94, y: -19}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -101,7 +101,7 @@ public class FarmTileData : TileData {
     public void Harvest()
     {
         //GameObject.FindObjectOfType<PlayerControl>().tempMoney += crop.health;
-        GameObject.FindObjectOfType<Inventory>().PickUpItem(crop.identity.yield, (int)crop.health, crop.health);
+        GameObject.FindObjectOfType<Inventory>().PickUpItem(crop.identity.yield, 1, crop.health);
         if (crop.identity.dieOnHarvest)
         {
             Die(false);

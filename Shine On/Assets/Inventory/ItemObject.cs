@@ -13,17 +13,8 @@ public class ItemObject : ScriptableObject
     public string itemName;
     public bool useable;
     public bool consumable;
-    public int stackSize;
 
     public ItemTool tool;
     public Sprite icon;
 
-    public void UseItem(GameObject _target)
-    {
-
-    }
-    public string WriteTooltip()
-    {
-        return itemName;
-    }
 }

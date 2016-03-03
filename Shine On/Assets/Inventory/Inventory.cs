@@ -10,23 +10,21 @@ public class InventoryItem
 {
     public ItemObject identity;
     
-    public int maxStack
-    {
-        get
-        {
-            return identity.stackSize;
-        }
-    }
+    
     public int count;
 
     public float data;
 
-    public InventoryItem()
+    public Sprite icon
     {
-
+        get
+        {
+            return identity.icon;
+        }
     }
+    
 }
-/* The InventoryItem class holds both an Item object and an integer for a number of items in the stack 
+/* The InventoryItem class holds both an ItemObject and an integer for a number of items in the stack 
  * to allow items of the same type to be stacked in one slot.*/
 
 public class Inventory : MonoBehaviour {
@@ -101,7 +99,7 @@ public class Inventory : MonoBehaviour {
             else
             {
                 slots[i].GetComponent<SlotScript>().itemImage.enabled = true;
-                slots[i].GetComponent<SlotScript>().itemImage.sprite = items[i].identity.icon;
+                slots[i].GetComponent<SlotScript>().itemImage.sprite = items[i].icon;
                 if (items[i].count > 1)
                 {
                     slots[i].GetComponent<SlotScript>().itemCount.enabled = true;
@@ -118,11 +116,7 @@ public class Inventory : MonoBehaviour {
                 slots[i].GetComponent<SlotScript>().rightClicked = false;
                 if (items[i].identity != null /*&& items[i].item.useable == true*/)
                 {
-                    /*items[i].item.UseItem(GameObject.FindGameObjectWithTag("Player"));
-                    if (items[i].item.consumable)
-                    {
-                        items[i].count--;
-                    }*/
+                    
                     TakeOutItem(i);
                 }
             }
@@ -135,7 +129,7 @@ public class Inventory : MonoBehaviour {
                     tooltipText.enabled = true;
                     tooltipText.gameObject.transform.position = Input.mousePosition;
                     tooltipText.gameObject.transform.position += new Vector3(0, -20, 0);
-                    tooltipText.text = items[i].identity.WriteTooltip();
+                    tooltipText.text = items[i].identity.name + " (" + items[i].data + ")";
                 }
             }
         }
@@ -188,9 +182,10 @@ public class Inventory : MonoBehaviour {
         {
             if (items[i].identity == null)
             {
-                items[i].identity = handHeldItem.identity;
-                items[i].count = handHeldItem.count;
-                items[i].data = handHeldItem.data;
+                //items[i].identity = handHeldItem.identity;
+                //items[i].count = handHeldItem.count;
+                //items[i].data = handHeldItem.data;
+                AddItemToEmptySlot(handHeldItem.identity, handHeldItem.count, handHeldItem.data);
 
                 ClearItem(handHeldItem);
 
@@ -201,7 +196,7 @@ public class Inventory : MonoBehaviour {
     }
     public void TakeOutItem(int _fromSlot)
     {
-        if (handHeldItem.count == 0)
+        if (handHeldItem.count == 0 && PlayerControl.ThePlayer.holding == false)
         {
             handHeldItem.identity = items[_fromSlot].identity;
             handHeldItem.count = items[_fromSlot].count;
@@ -226,7 +221,7 @@ public class Inventory : MonoBehaviour {
         return false;
     }
 
-    public bool AddItemToStack(ItemObject _item, int _count = 1, float _quality = 0)
+    /*public bool AddItemToStack(ItemObject _item, int _count = 1, float _quality = 0)
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -240,7 +235,7 @@ public class Inventory : MonoBehaviour {
             }
         }
         return false;
-    }
+    }*/
 
     void ClearItem(InventoryItem _target)
     {

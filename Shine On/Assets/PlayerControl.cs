@@ -12,6 +12,13 @@ public class PlayerControl : Entity {
     // Heading facing;
     public enum Tool { Hands = 0, Holding, WaterCan, Hoe, Seed };
     public Tool equipedTool = Tool.WaterCan;
+    public bool holding
+    {
+        get
+        {
+            return !(equipedTool == Tool.Hands);
+        }
+    }
     public bool interact = false;
     
     //public float walkSpeed = 0.1f;
@@ -67,11 +74,22 @@ public class PlayerControl : Entity {
         }
 
 
-	    foreach (ItemObject i in startTools)
+        /*foreach (ItemObject i in startTools)
         {
-            InvRef.AddItemToEmptySlot(i);
-        }
-	}
+            if (i.name != "Seeds")
+            {
+                InvRef.AddItemToEmptySlot(i);
+            }
+            else
+            {
+                InvRef.AddItemToEmptySlot(i, 25);
+            }
+        }*/
+        InvRef.AddItemToEmptySlot(startTools[0]);
+        InvRef.AddItemToEmptySlot(startTools[1]);
+        InvRef.AddItemToEmptySlot(startTools[2], 25, 0);
+        InvRef.AddItemToEmptySlot(startTools[3], 25, 1);
+    }
 	
 	// Update is called once per frame
 	void Update () {
