@@ -42,34 +42,5 @@ public class ItemObject : ScriptableObject
 
 }
 
-[CreateAssetMenu(fileName = "New Seed", menuName = "SeedBag", order = 2)]
-public class SeedBag : ItemObject
-{
-    [SerializeField]
-    private Plant _Plant;
-    public Plant plants
-    {
-        get
-        {
-            return _Plant;
-        }
-    }
-}
-[CreateAssetMenu(fileName = "New Produce", menuName = "Produce", order = 3)]
-public class Produce : ItemObject
-{
-    
-}
-[CreateAssetMenu(fileName = "New Tool", menuName = "Tool", order = 4)]
-public class Tool : ItemObject
-{
-    [SerializeField]
-    private PlayerControl.Tool _ToolType;
-    public PlayerControl.Tool toolType
-    {
-        get
-        {
-            return _ToolType;
-        }
-    }
-}
+
+
