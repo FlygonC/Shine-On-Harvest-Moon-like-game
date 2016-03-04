@@ -3,23 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 
 [System.Serializable]
 public class InventoryItem
 {
-    public ItemObject identity;
-    
-    
-    public int count;
 
+    public ItemObject identity;
+    public int count;
     public float data;
+
+    public SeedBag GetSeedBag
+    {
+        get
+        {
+            return identity as SeedBag;
+        }
+    }
+    public Tool GetTool
+    {
+        get
+        {
+            return identity as Tool;
+        }
+    }
+
 
     public Sprite icon
     {
         get
         {
             return identity.icon;
+        }
+    }
+    public string itemName
+    {
+        get
+        {
+            return identity.itemName;
         }
     }
     
@@ -45,7 +67,6 @@ public class Inventory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
         //_Data = GameObject.FindGameObjectWithTag("ItemDatabase").GetComponent<ItemDatabase>();
 
         int slotIndexer = 0;
@@ -84,6 +105,10 @@ public class Inventory : MonoBehaviour {
                 //i.count = 0;
                 ClearItem(i);
             }
+        }
+        if (handHeldItem.count <= 0)
+        {
+            ClearItem(handHeldItem);
         }
         //Update the slots
         //This could have been done on the slots themselves but I did it here because weirdness and 
@@ -129,7 +154,7 @@ public class Inventory : MonoBehaviour {
                     tooltipText.enabled = true;
                     tooltipText.gameObject.transform.position = Input.mousePosition;
                     tooltipText.gameObject.transform.position += new Vector3(0, -20, 0);
-                    tooltipText.text = items[i].identity.name + " (" + items[i].data + ")";
+                    tooltipText.text = items[i].identity.itemName + " (" + items[i].data + ")";
                 }
             }
         }
@@ -182,15 +207,23 @@ public class Inventory : MonoBehaviour {
         {
             if (items[i].identity == null)
             {
-                //items[i].identity = handHeldItem.identity;
-                //items[i].count = handHeldItem.count;
-                //items[i].data = handHeldItem.data;
                 AddItemToEmptySlot(handHeldItem.identity, handHeldItem.count, handHeldItem.data);
 
                 ClearItem(handHeldItem);
 
                 return true;
             }
+            else
+            {
+                if (items[i].identity.Equals(handHeldItem.identity) && items[i].data == handHeldItem.data && handHeldItem.identity.stackable)
+                {
+                    items[i].count += handHeldItem.count;
+
+                    ClearItem(handHeldItem);
+                }
+            }
+
+            
         }
         return false;
     }
@@ -221,11 +254,11 @@ public class Inventory : MonoBehaviour {
         return false;
     }
 
-    /*public bool AddItemToStack(ItemObject _item, int _count = 1, float _quality = 0)
+    /*public bool CheckStack(ItemObject _item, int _count = 1)
     {
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].identity == _item)
+            if (items[i].identity == _item && items[i].data == )
             {
                 if (items[i].count < items[i].maxStack)
                 {

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Chicken : Entity {
-    [Header("Chicken")]
+    [Header("Chicken:")]
     public int age = 0;
     public bool beingCarried = false;
 
@@ -14,8 +14,10 @@ public class Chicken : Entity {
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	protected override void Update ()
     {
+        base.Update();
+
         transform.rotation = Quaternion.Euler(0.0f, ((float)facing * 90.0f) - 90.0f, 0.0f);
 
         if (walkTime > 0)
@@ -41,7 +43,7 @@ public class Chicken : Entity {
         if (idleTime <= 0)
         {
             idleTime = Random.Range(3, 8);
-            walkTime = Random.Range(0.5f, 2);
+            walkTime = Random.Range(0.2f, 0.4f);
             int dir = Random.Range(0, 3);
             switch (dir)
             {
@@ -62,7 +64,7 @@ public class Chicken : Entity {
 
         if (beingCarried)
         {
-            transform.position = PlayerControl.ThePlayer.transform.position;
+            transform.position = PlayerControl.ThePlayer.transform.position + new Vector3(0, 2, 0);
         }
     }
 }

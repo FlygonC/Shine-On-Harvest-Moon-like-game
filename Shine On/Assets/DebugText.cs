@@ -13,11 +13,11 @@ public class DebugText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        PlayerControl.Tool equiped = GameObject.FindObjectOfType<PlayerControl>().equipedTool;
+        //PlayerControl.Tool equiped = GameObject.FindObjectOfType<PlayerControl>().equipedTool;
         float munny = FindObjectOfType<PlayerControl>().tempMoney;
         float timee = FindObjectOfType<FarmManager>().tempClock;
         float dayy = FindObjectOfType<FarmManager>().day;
 
-        display.text = "Time: " + timee + " Day: " + dayy + "\nEquiped Tool: " + equiped + "\nMoney: " + munny;
+        display.text = "Time: " + timee + " Day: " + dayy + "\nMoney: " + munny;
 	}
 }

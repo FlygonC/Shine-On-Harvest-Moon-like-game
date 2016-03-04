@@ -42,7 +42,7 @@ public class FarmSquare : MonoBehaviour {
         }
 
 
-        if (data.crop.health < 50)
+        /*if (data.crop.health < 50)
         {
             plant.GetComponentInChildren<MeshRenderer>().material = withermat;
         }
@@ -53,7 +53,7 @@ public class FarmSquare : MonoBehaviour {
         else if (data.crop.health >= 90)
         {
             plant.GetComponentInChildren<MeshRenderer>().material = healthyMat;
-        }
+        }*/
 
 
         plant.GetComponent<MeshRenderer>().enabled = data.planted;
@@ -67,7 +67,7 @@ public class FarmSquare : MonoBehaviour {
         // Player interaction
         if (PlayerControl.ThePlayer.interact && PlayerControl.ThePlayer.targetTile.Equals(data.tilePos))
         {
-            data.Interact(PlayerControl.ThePlayer.equipedTool);
+            data.Interact();
         }
     }
 }

@@ -10,13 +10,13 @@ public class PlayerControl : Entity {
 
     //public enum Heading { North = 0, East, South, West };
     // Heading facing;
-    public enum Tool { Hands = 0, Holding, WaterCan, Hoe, Seed };
-    public Tool equipedTool = Tool.WaterCan;
+    public enum Tool { Hands = 0, Holding, WaterCan, Hoe };
+    //public Tool equipedTool = Tool.WaterCan;
     public bool holding
     {
         get
         {
-            return !(equipedTool == Tool.Hands);
+            return InvRef.handHeldItem.identity != null;
         }
     }
     public bool interact = false;
@@ -27,6 +27,39 @@ public class PlayerControl : Entity {
 
     public ItemObject[] startTools;
 
+    public Vector2 interactionPoint
+    {
+        get
+        {
+            Vector2 ret = new Vector2();
+            float reach = 0.8f;
+            if (facing == Heading.East)
+            {
+                ret.x = transform.position.x + reach;
+            }
+            else if (facing == Heading.West)
+            {
+                ret.x = transform.position.x - reach;
+            }
+            else
+            {
+                ret.x = transform.position.x;
+            }
+            if (facing == Heading.North)
+            {
+                ret.y = transform.position.z + reach;
+            }
+            else if (facing == Heading.South)
+            {
+                ret.y = transform.position.z - reach;
+            }
+            else
+            {
+                ret.y = transform.position.z;
+            }
+            return ret;
+        }
+    }
     public TilePosition targetTile
     {
         get
@@ -60,6 +93,13 @@ public class PlayerControl : Entity {
             return ret;
         }
     }
+    public InventoryItem heldItem
+    {
+        get
+        {
+            return InvRef.handHeldItem;
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -87,22 +127,25 @@ public class PlayerControl : Entity {
         }*/
         InvRef.AddItemToEmptySlot(startTools[0]);
         InvRef.AddItemToEmptySlot(startTools[1]);
-        InvRef.AddItemToEmptySlot(startTools[2], 25, 0);
-        InvRef.AddItemToEmptySlot(startTools[3], 25, 1);
+        InvRef.AddItemToEmptySlot(startTools[2], 25);
+        InvRef.AddItemToEmptySlot(startTools[3], 25);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+
         if (InvRef.handHeldItem.count > 0)
         {
             GetComponentInChildren<SpriteRenderer>().sprite = InvRef.handHeldItem.identity.icon;
             GetComponentInChildren<SpriteRenderer>().enabled = true;
-            equipedTool = Tool.Holding + (int)InvRef.handHeldItem.identity.tool;
+            //equipedTool = Tool.Holding + (int)InvRef.handHeldItem.identity.tool;
         }
         else
         {
             GetComponentInChildren<SpriteRenderer>().enabled = false;
-            equipedTool = Tool.Hands;
+            //equipedTool = Tool.Hands;
         }
 
         transform.rotation = Quaternion.Euler(0.0f, (float)facing * 90.0f, 0.0f);
@@ -130,19 +173,34 @@ public class PlayerControl : Entity {
             }
         }
         // Move
-        Vector3 rawInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector2 rawInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (rawInput.magnitude > 1)
         {
-            transform.position += rawInput.normalized * walkSpeed * Time.deltaTime;
+            groundPosition += rawInput.normalized * walkSpeed * Time.deltaTime;
         } else
         {
-            transform.position += rawInput * walkSpeed * Time.deltaTime;
+            groundPosition += rawInput * walkSpeed * Time.deltaTime;
         }
         // Interaction
         interact = false;
         if (Input.GetButtonDown("Fire1"))
         {
             interact = true;
+            if (InvRef.handHeldItem.identity == null)
+            {
+                GroundItem[] search = FindObjectsOfType<GroundItem>();
+                foreach (GroundItem i in search)
+                {
+                    if (targetTile.Equals(i.position))
+                    {
+                        InvRef.PickUpItem(i.item.identity, i.item.count, i.item.data);
+                        i.PickedUp();
+                        interact = false;
+                        break;
+                    }
+                }
+            }
+            
         }
         // Equipment
         /*if (Input.GetButtonDown("Fire2"))

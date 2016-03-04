@@ -5,7 +5,9 @@ public class FarmManager : MonoBehaviour {
 
     public PlayerControl player;
     public FarmSquare squarePrefab;
-    public Plant defaultPlant;
+    public GroundItem dropItem;
+    public Produce eggggg;
+    public Plant defplnt;
 
     public float tempClock = 1;
     public float timer = 0;
@@ -28,7 +30,7 @@ public class FarmManager : MonoBehaviour {
                 farm[x, y] = new FarmTileData();
                 farm[x, y].tilePos.x = x;
                 farm[x, y].tilePos.y = y;
-                farm[x, y].crop.identity = defaultPlant;
+                farm[x, y].crop.identity = defplnt;
             }
         }
 
@@ -74,6 +76,16 @@ public class FarmManager : MonoBehaviour {
             {
                 farm[x, y].NextDay();
             }
+        }
+
+        Chicken[] chics = FindObjectsOfType<Chicken>();
+        foreach (Chicken i in chics)
+        {
+            GroundItem newEgg = (GroundItem)Instantiate(dropItem);
+            newEgg.position = i.tilePos;
+            newEgg.item.identity = eggggg;
+            newEgg.item.count = 1;
+            newEgg.item.data = (int)Random.Range(1, 5);
         }
     }
 
